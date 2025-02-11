@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "client")
 @Getter
 @Setter
+@Table(name = "client")
 public class Client {
 
     @Id
@@ -30,4 +30,6 @@ public class Client {
     public Client() {
 
     }
+
+
 }

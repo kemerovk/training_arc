@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("clients")
 @Controller
 public class TestController {
 
@@ -24,39 +25,46 @@ public class TestController {
     @GetMapping()
     public String getAllClients(Model model) {
         List<Client> clients = clientService.getClients();
+        for (Client client : clients) {
+            System.out.println(client.getName());
+        }
         model.addAttribute("clients", clients);
+        System.out.println("АLL");
         return "list";
     }
 
     @GetMapping("add")
     public String showAddForm(Model model) {
         model.addAttribute("client", new Client());
+        System.out.println("Add");
         return "add";
     }
 
     @PostMapping("add")
     public String addClient(@ModelAttribute Client client) {
+        System.out.println(client.getName() + " " + client.getAge());
         clientService.saveClient(client);
-        return "redirect:";
+        return "redirect:/clients";
     }
 
     @GetMapping("edit/{id}")
     public String showEditForm(@PathVariable int id, Model model) {
         Client client = clientService.getClientById(id);
         model.addAttribute("client", client);
+        System.out.println("Edit");
         return "edit";
     }
 
     @PostMapping("edit/{id}")
     public String updateClient(@PathVariable int id, @ModelAttribute Client client) {
         clientService.updateClient(client, id);
-        return "redirect:";
+        return "redirect:/clients";
     }
 
-    @GetMapping("delete/{id}")
+    @PostMapping("delete/{id}")
     public String deleteClient(@PathVariable int id) {
         clientService.deleteById(id);
-        return "redirect:";
+        return "redirect:/clients";
     }
 
 }
