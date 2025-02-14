@@ -3,6 +3,8 @@ package me.project.training_arc.controller;
 import me.project.training_arc.model.Client;
 import me.project.training_arc.service_impl.ClientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping("clients")
-@Controller
+@RestController
 public class TestController {
 
     @Autowired
@@ -23,14 +25,15 @@ public class TestController {
 
 
     @GetMapping()
-    public String getAllClients(Model model) {
+    public ResponseEntity<List<Client>> getAllClients(Model model) {
         List<Client> clients = clientService.getClients();
         for (Client client : clients) {
             System.out.println(client.getName());
         }
         model.addAttribute("clients", clients);
-        System.out.println("АLL");
-        return "list";
+//        System.out.println("АLL");
+//        return "list";
+        return ResponseEntity.status(HttpStatus.CREATED).body(clients);
     }
 
     @GetMapping("add")
