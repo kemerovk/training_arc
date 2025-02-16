@@ -1,11 +1,12 @@
 package me.project.training_arc.controller;
 
+import me.project.training_arc.dao.ClientDAO;
 import me.project.training_arc.model.Client;
 import me.project.training_arc.service_impl.ClientServiceImpl;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,38 +37,47 @@ public class TestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(clients);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Client> getClient(@PathVariable int id) {
+        Client client = clientService.getClientById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(client);
+    }
+
     @GetMapping("add")
-    public String showAddForm(Model model) {
+    private String showAddForm(Model model) {
         model.addAttribute("client", new Client());
         System.out.println("Add");
         return "add";
     }
 
     @PostMapping("add")
-    public String addClient(@ModelAttribute Client client) {
-        System.out.println(client.getName() + " " + client.getAge());
-        clientService.saveClient(client);
-        return "redirect:/clients";
+    public ResponseEntity<Client> addClient(@RequestBody ClientDAO client) {
+        Client newClient = new Client();
+        newClient.setName(client.name());
+        newClient.setAge(client.age());
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClient(newClient));
     }
 
     @GetMapping("edit/{id}")
-    public String showEditForm(@PathVariable int id, Model model) {
+    private String showEditForm(@PathVariable int id, Model model) {
         Client client = clientService.getClientById(id);
         model.addAttribute("client", client);
         System.out.println("Edit");
         return "edit";
     }
 
-    @PostMapping("edit/{id}")
-    public String updateClient(@PathVariable int id, @ModelAttribute Client client) {
-        clientService.updateClient(client, id);
-        return "redirect:/clients";
+    @PatchMapping("edit/{id}")
+    public ResponseEntity<Client> updateClient(@PathVariable int id, @RequestBody ClientDAO client) {
+        Client client1 = clientService.getClientById(id);
+        client1.setName(client.name());
+        client1.setAge(client.age());
+        return ResponseEntity.status(HttpStatus.OK).body(client1);
     }
 
-    @PostMapping("delete/{id}")
-    public String deleteClient(@PathVariable int id) {
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deleteClient(@PathVariable int id) {
         clientService.deleteById(id);
-        return "redirect:/clients";
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
