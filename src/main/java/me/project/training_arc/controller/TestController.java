@@ -71,6 +71,7 @@ public class TestController {
         Client client1 = clientService.getClientById(id);
         client1.setName(client.name());
         client1.setAge(client.age());
+        clientService.saveClient(client1);
         return ResponseEntity.status(HttpStatus.OK).body(client1);
     }
 
