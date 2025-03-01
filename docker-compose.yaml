@@ -17,10 +17,17 @@ services:
     depends_on:
       - postgres
     ports:
-      - "8000:8000"  # Порт для вашего приложения
+      - "8080:8080"  # Порт для вашего приложения
     networks:
       - default
+    volumes:
+      - fileStorage:/app/uploads/
 
 networks:
   default:
     driver: bridge
+
+volumes:
+  fileStorage:
+    external:
+      true

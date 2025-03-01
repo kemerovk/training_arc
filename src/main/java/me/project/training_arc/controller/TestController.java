@@ -3,7 +3,6 @@ package me.project.training_arc.controller;
 import me.project.training_arc.dao.ClientDAO;
 import me.project.training_arc.model.Client;
 import me.project.training_arc.service_impl.ClientServiceImpl;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
