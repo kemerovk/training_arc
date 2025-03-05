@@ -24,6 +24,7 @@ public class TestController {
     }
 
 
+    @CrossOrigin(origins = "http:localhost:5173")
     @GetMapping()
     public ResponseEntity<List<Client>> getAllClients(Model model) {
         List<Client> clients = clientService.getClients();
