@@ -1,5 +1,6 @@
 package me.project.training_arc.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import me.project.training_arc.dao.ClientDAO;
 import me.project.training_arc.model.Client;
 import me.project.training_arc.service_impl.ClientServiceImpl;
@@ -51,10 +52,11 @@ public class TestController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<Client> addClient(@RequestBody ClientDAO client) {
+    public ResponseEntity<Client> addClient(@RequestBody ClientDAO client, HttpServletRequest req) {
         Client newClient = new Client();
         newClient.setName(client.name());
         newClient.setAge(client.age());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClient(newClient));
     }
 

@@ -1,6 +1,7 @@
 package me.project.training_arc.service;
 
 import me.project.training_arc.model.Client;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
