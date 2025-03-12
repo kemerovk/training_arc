@@ -10,6 +10,7 @@ public class TrainingArcApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TrainingArcApplication.class, args);
+
     }
 
 }

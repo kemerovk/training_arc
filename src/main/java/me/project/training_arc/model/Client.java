@@ -18,14 +18,14 @@ public class Client {
     private int id;
 
     @Column(nullable = false)
-    private String name;
+    private String login;
 
     @Column
     private int age;
 
 
-    public Client(String name, int age){
-        this.name = name;
+    public Client(String login, int age){
+        this.login = login;
         this.age = age;
     }
 

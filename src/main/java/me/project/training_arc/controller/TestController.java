@@ -30,7 +30,7 @@ public class TestController {
     public ResponseEntity<List<Client>> getAllClients(Model model) {
         List<Client> clients = clientService.getClients();
         for (Client client : clients) {
-            System.out.println(client.getName());
+            System.out.println(client.getLogin());
         }
         model.addAttribute("clients", clients);
 //        System.out.println("АLL");
@@ -54,7 +54,7 @@ public class TestController {
     @PostMapping("add")
     public ResponseEntity<Client> addClient(@RequestBody ClientDAO client, HttpServletRequest req) {
         Client newClient = new Client();
-        newClient.setName(client.name());
+        newClient.setLogin(client.login());
         newClient.setAge(client.age());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClient(newClient));
@@ -71,7 +71,7 @@ public class TestController {
     @PatchMapping("edit/{id}")
     public ResponseEntity<Client> updateClient(@PathVariable int id, @RequestBody ClientDAO client) {
         Client client1 = clientService.getClientById(id);
-        client1.setName(client.name());
+        client1.setLogin(client.login());
         client1.setAge(client.age());
         clientService.saveClient(client1);
         return ResponseEntity.status(HttpStatus.OK).body(client1);
