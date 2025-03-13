@@ -39,9 +39,10 @@ public class TestController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Client> getClient(@PathVariable int id) {
+    public ResponseEntity<ClientDAO> getClient(@PathVariable int id) {
         Client client = clientService.getClientById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(client);
+        ClientDAO dao = new ClientDAO(client.getLogin(), client.getAge());
+        return ResponseEntity.status(HttpStatus.OK).body(dao);
     }
 
     @GetMapping("add")
