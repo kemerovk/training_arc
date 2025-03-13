@@ -15,6 +15,7 @@ public interface ClientService {
 
     public Client saveClient(Client client);
 
+    public Client saveClient(String login, int age);
 
     public void deleteById(int id);
     public Client updateClient(Client client, int id);

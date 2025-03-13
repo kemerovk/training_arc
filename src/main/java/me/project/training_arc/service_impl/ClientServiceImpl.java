@@ -33,6 +33,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client saveClient(String login, int age) {
+        Client client = new Client(login, age);
+        return clientRepository.save(client);
+    }
+
+    @Override
     public void deleteById(int id){
         clientRepository.deleteById(id);
     }
