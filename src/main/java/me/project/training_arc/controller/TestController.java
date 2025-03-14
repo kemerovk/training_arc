@@ -32,9 +32,6 @@ public class TestController {
         for (Client client : clients) {
             System.out.println(client.getLogin());
         }
-        model.addAttribute("clients", clients);
-//        System.out.println("АLL");
-//        return "list";
         return ResponseEntity.status(HttpStatus.CREATED).body(clients);
     }
 
@@ -45,12 +42,6 @@ public class TestController {
         return ResponseEntity.status(HttpStatus.OK).body(dao);
     }
 
-    @GetMapping("add")
-    private String showAddForm(Model model) {
-        model.addAttribute("client", new Client());
-        System.out.println("Add");
-        return "add";
-    }
 
     @PostMapping("add")
     public ResponseEntity<Client> addClient(@RequestBody ClientDAO client, HttpServletRequest req) {
@@ -61,13 +52,6 @@ public class TestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClient(newClient));
     }
 
-    @GetMapping("edit/{id}")
-    private String showEditForm(@PathVariable int id, Model model) {
-        Client client = clientService.getClientById(id);
-        model.addAttribute("client", client);
-        System.out.println("Edit");
-        return "edit";
-    }
 
     @PatchMapping("edit/{id}")
     public ResponseEntity<Client> updateClient(@PathVariable int id, @RequestBody ClientDAO client) {

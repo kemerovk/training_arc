@@ -23,10 +23,10 @@ public class CredentialsController {
     @PostMapping
     public ResponseEntity<Credentials> register(@RequestBody Credentials cred,
                                                 @RequestParam int age) {
-        System.out.println("Hey я зашел в контроллер с креденшиалами)))");
         client.saveClient(cred.getLogin(), age);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(service.register(cred));
     }
+
 }

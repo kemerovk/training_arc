@@ -29,6 +29,7 @@ public class SecurityConfig {
         System.out.println("Ты вообще работаешь???????");
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/register").permitAll()
                         .anyRequest().authenticated()
