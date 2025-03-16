@@ -6,4 +6,8 @@ public interface RegistrationService {
     Credentials register(String username, String password);
 
     Credentials register(Credentials credentials);
+
+    void delete(String login);
+
+    Credentials update(String oldLogin, String newLogin);
 }

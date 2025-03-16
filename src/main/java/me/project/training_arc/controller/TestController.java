@@ -2,8 +2,10 @@ package me.project.training_arc.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import me.project.training_arc.dao.ClientDAO;
+import me.project.training_arc.exceptions.custom_exception.UserNotFoundException;
 import me.project.training_arc.model.Client;
-import me.project.training_arc.service_impl.ClientServiceImpl;
+import me.project.training_arc.service.service_impl.ClientServiceImpl;
+import me.project.training_arc.service.service_impl.RegistrationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class TestController {
 
     @Autowired
     private ClientServiceImpl clientService;
+
+    @Autowired
+    private RegistrationServiceImpl service;
 
     @RequestMapping("test")
     public String test() {
@@ -36,7 +41,7 @@ public class TestController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ClientDAO> getClient(@PathVariable int id) {
+    public ResponseEntity<ClientDAO> getClient(@PathVariable int id){
         Client client = clientService.getClientById(id);
         ClientDAO dao = new ClientDAO(client.getLogin(), client.getAge());
         return ResponseEntity.status(HttpStatus.OK).body(dao);
@@ -44,7 +49,7 @@ public class TestController {
 
 
     @PostMapping("add")
-    public ResponseEntity<Client> addClient(@RequestBody ClientDAO client, HttpServletRequest req) {
+    public ResponseEntity<Client> addClient(@RequestBody ClientDAO client) {
         Client newClient = new Client();
         newClient.setLogin(client.login());
         newClient.setAge(client.age());

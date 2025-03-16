@@ -1,17 +1,16 @@
 package me.project.training_arc.controller;
 
 
-import me.project.training_arc.model.Client;
 import me.project.training_arc.model.Credentials;
-import me.project.training_arc.service_impl.ClientServiceImpl;
-import me.project.training_arc.service_impl.RegistrationServiceImpl;
+import me.project.training_arc.service.service_impl.ClientServiceImpl;
+import me.project.training_arc.service.service_impl.RegistrationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("register")
+@RequestMapping("credentials")
 public class CredentialsController {
 
     @Autowired
@@ -28,5 +27,14 @@ public class CredentialsController {
                 .status(HttpStatus.CREATED)
                 .body(service.register(cred));
     }
+
+    @DeleteMapping
+    public ResponseEntity.BodyBuilder deleteUser(@RequestParam String login)  {
+        service.delete(login);
+        client.deleteByLogin(login);
+        return ResponseEntity.ok();
+    }
+
+
 
 }
