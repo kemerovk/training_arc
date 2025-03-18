@@ -3,9 +3,7 @@ FROM eclipse-temurin:21-jdk-jammy
 
 WORKDIR /app
 ARG JAR_FILE=target/*.jar
-RUN mkdir -p /app/files
-RUN mkdir -p /app/uploads
-RUN mkdir -p /app/downloads
+RUN mkdir -p /app/minio
 
 COPY ${JAR_FILE} app.jar
 COPY ./filesToTest/* /app/files/

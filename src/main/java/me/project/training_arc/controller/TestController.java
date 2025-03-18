@@ -1,8 +1,6 @@
 package me.project.training_arc.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import me.project.training_arc.dao.ClientDAO;
-import me.project.training_arc.exceptions.custom_exception.UserNotFoundException;
 import me.project.training_arc.model.Client;
 import me.project.training_arc.service.service_impl.ClientServiceImpl;
 import me.project.training_arc.service.service_impl.RegistrationServiceImpl;

@@ -20,8 +20,6 @@ services:
       - "8080:8080"  # Порт для вашего приложения
     networks:
       - default
-    volumes:
-      - fileStorage:/app/uploads/
 
   front:
     build:
@@ -34,6 +32,19 @@ services:
     networks:
       - default
 
+  minio:
+    image: 'minio/minio:latest'
+    environment:
+      MINIO_ROOT_USER: tsoyka
+      MINIO_ROOT_PASSWORD: qwertyui
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - default
+    volumes:
+      - minio:/app/minio/
+    command: server /data --console-address ":9001"
 
 
 networks:
@@ -41,6 +52,6 @@ networks:
     driver: bridge
 
 volumes:
-  fileStorage:
+  minio:
     external:
       true
