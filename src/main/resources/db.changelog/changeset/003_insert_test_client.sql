@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset kemerovqq:4
+--changeset kemerovqq:3
 insert into client(login, age) values
     ('test_user', 19);
 

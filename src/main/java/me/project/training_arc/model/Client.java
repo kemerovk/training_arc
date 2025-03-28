@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.project.training_arc.dao.ClientDAO;
+import me.project.training_arc.dto.ClientDto;
 
 @Entity
 @Data
@@ -30,7 +30,7 @@ public class Client {
         this.age = age;
     }
 
-    public Client(ClientDAO dao) {
+    public Client(ClientDto dao) {
         this.login = dao.login();
         this.age = dao.age();
     }

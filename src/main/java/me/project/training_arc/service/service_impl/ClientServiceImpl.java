@@ -1,14 +1,12 @@
 package me.project.training_arc.service.service_impl;
 
-import me.project.training_arc.dao.ClientDAO;
+import me.project.training_arc.dto.ClientDto;
 import me.project.training_arc.exceptions.custom_exception.UserNotFoundException;
 import me.project.training_arc.exceptions.custom_exception.UsernameAlreadyExistsException;
 import me.project.training_arc.model.Client;
 import me.project.training_arc.repository.ClientRepository;
 import me.project.training_arc.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,13 +52,13 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void deleteById(int id){
-        Client client = clientRepository.getReferenceById(id);
-        if (client == null) throw new UserNotFoundException("Пользователя с таким id не существует");
+        Optional<Client> client = clientRepository.findById(id);
+        if (client.isEmpty()) throw new UserNotFoundException("Пользователя с таким id не существует");
         clientRepository.deleteById(id);
     }
 
     @Override
-    public Client updateClient(ClientDAO client, int id) {
+    public Client updateClient(ClientDto client, int id) {
         Client cl = clientRepository.getReferenceById(id);
         if (!cl.getLogin().equals(client.login())) {
             if (clientRepository.findByLogin(client.login()) != null) throw new UsernameAlreadyExistsException("Логин занят");

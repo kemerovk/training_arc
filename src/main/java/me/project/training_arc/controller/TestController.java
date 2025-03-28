@@ -1,17 +1,21 @@
 package me.project.training_arc.controller;
 
-import me.project.training_arc.dao.ClientDAO;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import me.project.training_arc.dto.ClientDto;
 import me.project.training_arc.model.Client;
 import me.project.training_arc.service.service_impl.ClientServiceImpl;
 import me.project.training_arc.service.service_impl.RegistrationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@Validated
 @RequestMapping("clients")
 @RestController
 public class TestController {
@@ -30,24 +34,23 @@ public class TestController {
 
     @CrossOrigin(origins = "http:localhost:5173")
     @GetMapping()
-    public ResponseEntity<List<Client>> getAllClients(Model model) {
+    public ResponseEntity<List<Client>> getAllClients() {
         List<Client> clients = clientService.getClients();
-        for (Client client : clients) {
-            System.out.println(client.getLogin());
-        }
         return ResponseEntity.status(HttpStatus.CREATED).body(clients);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ClientDAO> getClient(@PathVariable int id){
+    public ResponseEntity<ClientDto> getClient(@PathVariable
+                                               @Positive(message = "пошел нахуй идиот блять сука дебил") int id){
         Client client = clientService.getClientById(id);
-        ClientDAO dao = new ClientDAO(client.getLogin(), client.getAge());
+        ClientDto dao = new ClientDto(client.getLogin(), client.getAge());
         return ResponseEntity.status(HttpStatus.OK).body(dao);
     }
 
 
     @PostMapping("add")
-    public ResponseEntity<Client> addClient(@RequestBody ClientDAO client) {
+    public ResponseEntity<Client> addClient(@RequestBody
+                                            @Valid ClientDto client) {
         Client newClient = new Client();
         newClient.setLogin(client.login());
         newClient.setAge(client.age());
@@ -57,7 +60,10 @@ public class TestController {
 
 
     @PatchMapping("edit/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable int id, @RequestBody ClientDAO client) {
+    public ResponseEntity<Client> updateClient(@PathVariable
+                                               @Positive int id,
+                                               @RequestBody
+                                               @Valid ClientDto client) {
         Client client1 = clientService.getClientById(id);
         client1.setLogin(client.login());
         client1.setAge(client.age());
@@ -66,7 +72,8 @@ public class TestController {
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<String> deleteClient(@PathVariable int id) {
+    public ResponseEntity<String> deleteClient(@PathVariable
+                                               @Positive int id) {
         clientService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -23,10 +23,6 @@ public class FileServiceImpl {
     }
 
     public File getFile(String filename) {
-        var file = new File(PATH_TO_VOLUME + "/" + filename);
-        if (file == null) {
-            throw new NullPointerException("filename is null");
-        }
-        return file;
+        return new File(PATH_TO_VOLUME + "/" + filename);
     }
 }
