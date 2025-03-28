@@ -1,6 +1,7 @@
 package me.project.training_arc.controller;
 
 
+import me.project.training_arc.dto.CredentialsDto;
 import me.project.training_arc.model.Credentials;
 import me.project.training_arc.service.service_impl.ClientServiceImpl;
 import me.project.training_arc.service.service_impl.RegistrationServiceImpl;
@@ -20,9 +21,9 @@ public class CredentialsController {
     private ClientServiceImpl client;
 
     @PostMapping
-    public ResponseEntity<Credentials> register(@RequestBody Credentials cred,
+    public ResponseEntity<Credentials> register(@RequestBody CredentialsDto cred,
                                                 @RequestParam int age) {
-        client.saveClient(cred.getLogin(), age);
+        client.saveClient(cred.login(), age);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(service.register(cred));

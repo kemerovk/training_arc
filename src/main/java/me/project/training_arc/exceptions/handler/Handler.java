@@ -1,10 +1,12 @@
 package me.project.training_arc.exceptions.handler;
 
 
+import jakarta.validation.ConstraintViolationException;
 import me.project.training_arc.exceptions.custom_exception.UserNotFoundException;
 import me.project.training_arc.exceptions.custom_exception.UsernameAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,6 +39,19 @@ public class Handler {
                errors.put(field, errorMessage);
            });
 
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, String>> constraintViolation(ConstraintViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getConstraintViolations().forEach(error -> {
+            String field = error.getPropertyPath().toString();
+            String errorMessage = error.getMessage();
+            errors.put(field, errorMessage);
+                }
+        );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 

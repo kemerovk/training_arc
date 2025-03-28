@@ -1,5 +1,6 @@
 package me.project.training_arc.service.service_impl;
 
+import me.project.training_arc.dto.CredentialsDto;
 import me.project.training_arc.exceptions.custom_exception.UserNotFoundException;
 import me.project.training_arc.exceptions.custom_exception.UsernameAlreadyExistsException;
 import me.project.training_arc.model.Credentials;
@@ -35,11 +36,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public Credentials register(Credentials credentials) {
-        if (credentialsRepository.findByLogin(credentials.getLogin()) != null)
+    public Credentials register(CredentialsDto credentials) {
+        if (credentialsRepository.findByLogin(credentials.login()) != null)
             throw new UsernameAlreadyExistsException("Пользователь с таким логином уже существует");
-        credentials.setPassword(passwordEncoder.encode(credentials.getPassword()));
-        return credentialsRepository.save(credentials);
+        Credentials cred = new Credentials(credentials.login(), passwordEncoder.encode(credentials.password()));
+        return credentialsRepository.save(cred);
     }
 
 

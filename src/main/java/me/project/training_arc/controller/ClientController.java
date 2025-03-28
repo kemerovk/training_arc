@@ -18,7 +18,7 @@ import java.util.List;
 @Validated
 @RequestMapping("clients")
 @RestController
-public class TestController {
+public class ClientController {
 
     @Autowired
     private ClientServiceImpl clientService;
@@ -41,7 +41,7 @@ public class TestController {
 
     @GetMapping("{id}")
     public ResponseEntity<ClientDto> getClient(@PathVariable
-                                               @Positive(message = "пошел нахуй идиот блять сука дебил") int id){
+                                               @Positive(message = "ахахахах лох") int id){
         Client client = clientService.getClientById(id);
         ClientDto dao = new ClientDto(client.getLogin(), client.getAge());
         return ResponseEntity.status(HttpStatus.OK).body(dao);

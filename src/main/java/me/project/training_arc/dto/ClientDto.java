@@ -4,8 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
 public record ClientDto(
-        @NotBlank(message = "еблан")
+        @NotBlank(message = "дурак")
         String login,
-        @Positive(message = "сука")
+        @Positive(message = "блин")
         int age){
 }

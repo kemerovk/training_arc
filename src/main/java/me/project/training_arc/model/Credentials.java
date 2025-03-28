@@ -13,4 +13,13 @@ public class Credentials {
 
     @Column
     private String password;
+
+    public Credentials(String login, String encode) {
+        this.login = login;
+        this.password = encode;
+    }
+
+    public Credentials() {
+
+    }
 }
