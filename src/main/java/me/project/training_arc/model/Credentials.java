@@ -8,7 +8,11 @@ import lombok.Data;
 @Data
 public class Credentials {
 
+    // не забывать, что это внешний ключ
     @Id
+    private int id;
+
+    @Column
     private String login;
 
     @Column

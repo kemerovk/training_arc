@@ -1,6 +1,6 @@
 package me.project.training_arc.configuration;
 
-import me.project.training_arc.service.service_impl.MyUserDetailsService;
+import me.project.training_arc.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
@@ -46,11 +46,11 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")  // Разрешить CORS для всех эндпоинтов
-                        .allowedOrigins("http://localhost:5173", "http:127.0.0.1:5173")  // Разрешенный домен фронтенда
-                        .allowedMethods("*")  // Разрешенные HTTP-методы
-                        .allowedHeaders("*")  // Разрешенные заголовки
-                        .allowCredentials(true);  // Разрешить передачу куки и авторизационных данных
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:5173", "http:127.0.0.1:5173")
+                        .allowedMethods("*")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }

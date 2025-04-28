@@ -6,7 +6,6 @@ ARG JAR_FILE=target/*.jar
 RUN mkdir -p /app/minio
 
 COPY ${JAR_FILE} app.jar
-COPY ./filesToTest/* /app/files/
 
 EXPOSE 8080
 

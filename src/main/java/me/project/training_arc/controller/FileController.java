@@ -1,7 +1,7 @@
 package me.project.training_arc.controller;
 
 
-import me.project.training_arc.service.service_impl.FileServiceImpl;
+import me.project.training_arc.service.FileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;

@@ -1,4 +1,4 @@
-package me.project.training_arc.service.service_impl;
+package me.project.training_arc.service;
 
 
 import org.springframework.beans.factory.annotation.Value;

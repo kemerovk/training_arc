@@ -1,4 +1,4 @@
-package me.project.training_arc.service.service_impl;
+package me.project.training_arc.service;
 
 
 import me.project.training_arc.model.Credentials;
