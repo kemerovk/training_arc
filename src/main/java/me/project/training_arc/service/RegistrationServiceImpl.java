@@ -1,6 +1,6 @@
 package me.project.training_arc.service;
 
-import me.project.training_arc.dto.CredentialsDto;
+import me.project.training_arc.dto.SignUpRequest;
 import me.project.training_arc.exceptions.custom_exception.UserNotFoundException;
 import me.project.training_arc.exceptions.custom_exception.UsernameAlreadyExistsException;
 import me.project.training_arc.model.Credentials;
@@ -23,22 +23,16 @@ public class RegistrationServiceImpl  {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+//
+//    public Credentials register(SignUpRequest request) {
+//        if (credentialsRepository.findByLogin(login) != null) throw new UsernameAlreadyExistsException("Пользователь с таким логином уже существует");
+//        Credentials credentials = new Credentials();
+//        credentials.setLogin(login);
+//        credentials.setPassword(passwordEncoder.encode(password));
+//        credentialsRepository.save(credentials);
+//        return credentials;
+//    }
 
-    public Credentials register(String login, String password) {
-        if (credentialsRepository.findByLogin(login) != null) throw new UsernameAlreadyExistsException("Пользователь с таким логином уже существует");
-        Credentials credentials = new Credentials();
-        credentials.setLogin(login);
-        credentials.setPassword(passwordEncoder.encode(password));
-        credentialsRepository.save(credentials);
-        return credentials;
-    }
-
-    public Credentials register(CredentialsDto credentials) {
-        if (credentialsRepository.findByLogin(credentials.login()) != null)
-            throw new UsernameAlreadyExistsException("Пользователь с таким логином уже существует");
-        Credentials cred = new Credentials(credentials.login(), passwordEncoder.encode(credentials.password()));
-        return credentialsRepository.save(cred);
-    }
 
     public void delete(String login){
         Credentials cred = credentialsRepository.findByLogin(login);

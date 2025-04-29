@@ -1,11 +1,15 @@
 package me.project.training_arc.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "credentials")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Credentials {
 
     // не забывать, что это внешний ключ
@@ -18,12 +22,5 @@ public class Credentials {
     @Column
     private String password;
 
-    public Credentials(String login, String encode) {
-        this.login = login;
-        this.password = encode;
-    }
 
-    public Credentials() {
-
-    }
 }

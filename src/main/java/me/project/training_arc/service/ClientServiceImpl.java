@@ -1,6 +1,5 @@
 package me.project.training_arc.service;
 
-import me.project.training_arc.dto.ClientDto;
 import me.project.training_arc.exceptions.custom_exception.UserNotFoundException;
 import me.project.training_arc.exceptions.custom_exception.UsernameAlreadyExistsException;
 import me.project.training_arc.model.Client;
@@ -46,13 +45,7 @@ public class ClientServiceImpl {
         clientRepository.deleteById(id);
     }
 
-    public Client updateClient(ClientDto client, int id) {
-        Client cl = clientRepository.getReferenceById(id);
-        if (!cl.getLogin().equals(client.login())) {
-            if (clientRepository.findByLogin(client.login()) != null) throw new UsernameAlreadyExistsException("Логин занят");
-        }
-        return clientRepository.save(cl);
-    }
+
 
     public Client findByLogin(String login){
         Client client = clientRepository.findByLogin(login);

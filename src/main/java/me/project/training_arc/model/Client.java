@@ -2,10 +2,9 @@ package me.project.training_arc.model;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import me.project.training_arc.dto.ClientDto;
+import lombok.*;
+import me.project.training_arc.dto.SignUpRequest;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Time;
 
@@ -14,6 +13,9 @@ import java.sql.Time;
 @Getter
 @Setter
 @Table(name = "client")
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,19 +36,12 @@ public class Client {
     @Column(name = "created_at")
     private Time creationTime;
 
-    public Client(String login, int age){
-        this.login = login;
-        this.age = age;
+
+    public Client(SignUpRequest request) {
+        this.login = request.login();
+        this.age = request.age();
+        this.email = request.email();
+        this.minioPath = request.minioPath();
+        this.creationTime = request.creationTime();
     }
-
-    public Client(ClientDto dao) {
-        this.login = dao.login();
-        this.age = dao.age();
-    }
-
-    public Client() {
-
-    }
-
-
 }

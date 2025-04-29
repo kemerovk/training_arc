@@ -2,7 +2,6 @@ package me.project.training_arc.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import me.project.training_arc.dto.ClientDto;
 import me.project.training_arc.model.Client;
 import me.project.training_arc.service.ClientServiceImpl;
 import me.project.training_arc.service.RegistrationServiceImpl;
@@ -39,37 +38,8 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.CREATED).body(clients);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<ClientDto> getClient(@PathVariable
-                                               @Positive(message = "ахахахах лох") int id){
-        Client client = clientService.getClientById(id);
-        ClientDto dao = new ClientDto(client.getLogin(), client.getAge());
-        return ResponseEntity.status(HttpStatus.OK).body(dao);
-    }
 
 
-    @PostMapping("add")
-    public ResponseEntity<Client> addClient(@RequestBody
-                                            @Valid ClientDto client) {
-        Client newClient = new Client();
-        newClient.setLogin(client.login());
-        newClient.setAge(client.age());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClient(newClient));
-    }
-
-
-    @PatchMapping("edit/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable
-                                               @Positive int id,
-                                               @RequestBody
-                                               @Valid ClientDto client) {
-        Client client1 = clientService.getClientById(id);
-        client1.setLogin(client.login());
-        client1.setAge(client.age());
-        clientService.saveClient(client1);
-        return ResponseEntity.status(HttpStatus.OK).body(client1);
-    }
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable
