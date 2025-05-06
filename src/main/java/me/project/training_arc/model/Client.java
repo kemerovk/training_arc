@@ -1,6 +1,7 @@
 package me.project.training_arc.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import me.project.training_arc.dto.SignUpRequest;
@@ -15,7 +16,6 @@ import java.sql.Time;
 @Table(name = "client")
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,7 @@ public class Client {
     private String minioPath;
 
     @Column(name = "created_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Time creationTime;
 
 

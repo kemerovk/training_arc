@@ -12,7 +12,7 @@ import java.util.Optional;
 
 
 @Service
-public class ClientServiceImpl {
+public class ClientService {
 
     @Autowired
     private ClientRepository clientRepository;
@@ -34,7 +34,7 @@ public class ClientServiceImpl {
     }
 
     public Client saveClient(Client client){
-        if (clientRepository.findByLogin(client.getLogin()) != null) throw new UsernameAlreadyExistsException("Логин занят");
+        if (clientRepository.findByLogin(client.getLogin()).isPresent()) throw new UsernameAlreadyExistsException("Логин занят");
         return clientRepository.save(client);
     }
 
@@ -48,9 +48,9 @@ public class ClientServiceImpl {
 
 
     public Client findByLogin(String login){
-        Client client = clientRepository.findByLogin(login);
-        if (client == null) throw new UserNotFoundException("Не получилось найти пользователя");
-        return client;
+        Optional<Client> client = clientRepository.findByLogin(login);
+        if (client.isEmpty()) throw new UserNotFoundException("Не получилось найти пользователя");
+        return client.get();
     }
 
 }

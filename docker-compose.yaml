@@ -23,7 +23,7 @@ services:
 
   front:
     build:
-      context: ../am_I_psycho
+      context: ./training_arc_front
       dockerfile: Dockerfile
     depends_on:
       - app

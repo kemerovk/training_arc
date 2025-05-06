@@ -7,6 +7,8 @@ create table if not exists credentials(
     login text references "client" (login)
             on delete cascade
             on update cascade,
+    email text references "client" (email)
+            on delete cascade
+            on update cascade,
     password text not null
-
 );

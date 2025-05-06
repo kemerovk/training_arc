@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class FileServiceImpl {
+public class FileService {
 
     @Value("${docker.path}")
     private String PATH_TO_VOLUME;
