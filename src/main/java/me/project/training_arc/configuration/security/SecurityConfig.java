@@ -38,7 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/credentials/register",
                                          "/credentials/login",
                                          "/credentials/login-jwt",
-                                         "/credentials/refresh").permitAll()
+                                         "/credentials/refresh",
+                                         "/minio/upload").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

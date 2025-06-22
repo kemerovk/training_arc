@@ -23,7 +23,7 @@ public class MinioController {
     @Autowired
     private MinioService minioService;
 
-    @PostMapping("test")
+    @PostMapping("upload")
     public String test(@RequestParam("file")MultipartFile file) throws
             ServerException,
             InsufficientDataException,

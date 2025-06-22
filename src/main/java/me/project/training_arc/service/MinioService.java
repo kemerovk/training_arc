@@ -2,14 +2,12 @@ package me.project.training_arc.service;
 
 import io.minio.*;
 import io.minio.errors.*;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
@@ -50,19 +48,19 @@ public class MinioService {
 
     /**
      * creates bucket
+     *
      * @param bucketName {@link String} object
-     * @return boolean - true if bucket was created by this method
-     * @throws ErrorResponseException thrown to indicate S3 service returned an error response.
+     * @throws ErrorResponseException    thrown to indicate S3 service returned an error response.
      * @throws InsufficientDataException thrown to indicate not enough data available in InputStream.
-     * @throws InternalException thrown to indicate internal library error.
-     * @throws InvalidKeyException thrown to indicate missing of HMAC SHA-256 library.
-     * @throws InvalidResponseException thrown to indicate S3 service returned invalid or no error
-     *     response.
-     * @throws IOException thrown to indicate I/O error on S3 operation.
-     * @throws NoSuchAlgorithmException thrown to indicate missing of MD5 or SHA-256 digest library.
-     * @throws XmlParserException thrown to indicate XML parsing error.
+     * @throws InternalException         thrown to indicate internal library error.
+     * @throws InvalidKeyException       thrown to indicate missing of HMAC SHA-256 library.
+     * @throws InvalidResponseException  thrown to indicate S3 service returned invalid or no error
+     *                                   response.
+     * @throws IOException               thrown to indicate I/O error on S3 operation.
+     * @throws NoSuchAlgorithmException  thrown to indicate missing of MD5 or SHA-256 digest library.
+     * @throws XmlParserException        thrown to indicate XML parsing error.
      */
-    public boolean createBucket(String bucketName) throws ServerException,
+    public void createBucket(String bucketName) throws ServerException,
             InsufficientDataException,
             ErrorResponseException,
             IOException,
@@ -73,9 +71,7 @@ public class MinioService {
             InternalException {
         if (!bucketExists(bucketName)) {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
-            return true;
         }
-        return false;
     }
 
 
@@ -106,7 +102,7 @@ public class MinioService {
 
         if (file.isEmpty()) throw new RuntimeException("file is empty");
         if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build()))
-            minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+            createBucket(bucketName);
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucketName)
@@ -138,5 +134,18 @@ public class MinioService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error downloading file from Minio", e);
         }
+    }
+
+
+
+    public boolean deleteFile(String bucketName, String objectName) {
+        try {
+            minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucketName).object(objectName).build());
+        } catch (ServerException | InsufficientDataException | ErrorResponseException | IOException |
+                 NoSuchAlgorithmException | InvalidKeyException | InvalidResponseException | XmlParserException |
+                 InternalException e) {
+            return false;
+        }
+        return true;
     }
 }

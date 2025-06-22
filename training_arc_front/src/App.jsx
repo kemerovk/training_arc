@@ -1,14 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginForm from './LoginForm.jsx';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginPage from "./LoginPage";
+import DashboardPage from "./DashboardPage";
+import RegisterPage from "./RegisterPage.jsx";
+import UploadPage from "./UploadPage.jsx";
 
-const App = () => (
-    <Router>
-        <Routes>
-            <Route path="/" element={<LoginForm />} />
-            <Route path="/client/success" />
-        </Routes>
-    </Router>
-);
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/upload" element={<UploadPage/>}/>
+            </Routes>
+        </Router>
+    );
+}
 
 export default App;
