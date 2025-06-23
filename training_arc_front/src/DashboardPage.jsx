@@ -10,7 +10,7 @@ function DashboardPage() {
     useEffect(() => {
         const fetchClient = async () => {
             try {
-                const response = await api.get("/clients/me");
+                const response = await api.get("http://localhost:8080/clients/me");
                 setClient(response.data);
                 localStorage.setItem("user", JSON.stringify(response.data));
             } catch (err) {

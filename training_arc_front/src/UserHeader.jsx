@@ -1,78 +1,73 @@
 // src/components/UserHeader.jsx
 import React from "react";
-import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 const UserHeader = () => {
-    const user = JSON.parse(localStorage.getItem("user")) || {};
-    const handleLogout = async () => {
-        try {
-            await axios.post("http://localhost:8080/logout", {}, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            });
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-            localStorage.removeItem("user");
-            window.location.href = "/login";
-        } catch (error) {
-            console.error("Ошибка выхода:", error);
-            // Можно добавить уведомление об ошибке
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-            localStorage.removeItem("user");
-            window.location.href = "/login";
-        }
-    };
+    const { user, logout } = useAuth();
 
     return (
         <div style={styles.header}>
-            <div style={styles.userInfo} onClick={handleLogout}>
+            <div style={styles.userInfo}>
                 <div style={styles.avatar}>
-                    {user.login?.charAt(0).toUpperCase() || "?"}
-                        </div>
-                        <div style={styles.textInfo}>
-                    <strong>{user.login || "Пользователь"}</strong>
+                    {user?.login?.charAt(0).toUpperCase() || "?"}
+                </div>
+                <div style={styles.textInfo}>
+                    <strong>{user?.login || "Пользователь"}</strong>
+                    <div>
+                        <button onClick={logout} style={styles.logoutButton}>
+                            Выйти
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-);
+    );
 };
 
 const styles = {
     header: {
         position: "fixed",
-            top: 0,
-            right: 0,
-            left: 0,
-            padding: "10px 20px",
-            backgroundColor: "#ffffff",
-            borderBottom: "1px solid #ddd",
-            display: "flex",
-            justifyContent: "flex-end",
-            zIndex: 1000,
-            fontFamily: "Arial, sans-serif"
+        top: 0,
+        right: 0,
+        left: 0,
+        padding: "10px 20px",
+        backgroundColor: "#ffffff",
+        borderBottom: "1px solid #ddd",
+        display: "flex",
+        justifyContent: "flex-end",
+        zIndex: 1000,
+        fontFamily: "Arial, sans-serif"
     },
     userInfo: {
         display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            cursor: "pointer"
+        alignItems: "center",
+        gap: "10px",
+        cursor: "default"
     },
     avatar: {
         width: "36px",
-            height: "36px",
-            borderRadius: "50%",
-            backgroundColor: "#007bff",
-            color: "white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "16px",
-            fontWeight: "bold"
+        height: "36px",
+        borderRadius: "50%",
+        backgroundColor: "#007bff",
+        color: "white",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: "16px",
+        fontWeight: "bold"
     },
     textInfo: {
         textAlign: "right"
+    },
+    logoutButton: {
+        marginTop: "4px",
+        padding: "4px 8px",
+        fontSize: "12px",
+        backgroundColor: "#dc3545",
+        color: "white",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer"
     }
 };
 

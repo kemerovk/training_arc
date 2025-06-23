@@ -1,12 +1,14 @@
 package me.project.training_arc.controller;
 
 import io.minio.errors.*;
+import me.project.training_arc.service.ClientService;
 import me.project.training_arc.service.MinioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,12 +21,14 @@ import java.security.NoSuchAlgorithmException;
 @RequestMapping("minio")
 public class MinioController {
 
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     private MinioService minioService;
 
     @PostMapping("upload")
-    public String test(@RequestParam("file")MultipartFile file) throws
+    public String test(@RequestParam("bucket") String bucketName, @RequestParam("file")MultipartFile file) throws
             ServerException,
             InsufficientDataException,
             ErrorResponseException,
@@ -35,7 +39,14 @@ public class MinioController {
             XmlParserException,
             InternalException
     {
-        return minioService.uploadFileToMinio("test-bucket", file);
+        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("login: " + login);
+        String name = minioService.uploadFileToMinio(bucketName, file);
+        if (bucketName.equals("avatar")){
+            clientService.updateMinioPath(login, bucketName);
+        }
+        return name;
+
     }
 
     @GetMapping("/download")

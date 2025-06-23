@@ -8,6 +8,7 @@ import me.project.training_arc.dto.SignUpRequest;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Time;
+import java.util.Date;
 
 @Entity
 @Data
@@ -34,8 +35,8 @@ public class Client {
     private String minioPath;
 
     @Column(name = "created_at")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Time creationTime;
+    private Date creationTime;
+
 
 
     public Client(SignUpRequest request) {

@@ -14,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 
 @Service
@@ -25,9 +28,6 @@ public class RegistrationService {
 
     @Autowired
     private ClientRepository clientRepository;
-
-    @Autowired
-    private CredentialsRepository credentialsRepository1;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -42,7 +42,11 @@ public class RegistrationService {
             throw new RuntimeException("Пользователь с такой почтой уже зарегистрирован");
         }
 
+        Calendar calendar = new GregorianCalendar();
+
+
         Client client = new Client(signUpRequest);
+        client.setCreationTime(calendar.getTime());
         clientRepository.save(client);
 
         Credentials credentials = new Credentials(signUpRequest.login(), signUpRequest.email(), passwordEncoder.encode(signUpRequest.password()));

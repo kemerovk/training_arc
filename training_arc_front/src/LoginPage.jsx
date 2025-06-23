@@ -1,29 +1,22 @@
+// src/pages/LoginPage.jsx
 import React, { useState } from "react";
-import axios from "axios";
+import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const { login: authLogin } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axios.post("http://localhost:8080/credentials/login-jwt", {
-                login,
-                password
-            });
-
-            const { access, refresh } = response.data;
-
-            // Сохраняем токены в localStorage
-            localStorage.setItem("accessToken", access);
-            localStorage.setItem("refreshToken", refresh);
-
-            // Можно сделать редирект или обновление состояния
-            window.location.href = "/dashboard"; // или что-то другое
-        } catch (err) {
+        const success = await authLogin(login, password);
+        if (success) {
+            navigate("/dashboard");
+        } else {
             setError("Неверный логин или пароль");
         }
     };

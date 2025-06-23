@@ -6,6 +6,7 @@ import me.project.training_arc.model.Client;
 import me.project.training_arc.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,11 +18,17 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Transactional
+    public boolean updateMinioPath(String login, String minioPath){
+        int x = clientRepository.updateMinioPath(minioPath, login);
+        System.out.println(x + " rows was updated");
+        System.out.println("login: " + login + " minioPath: " + minioPath );
+        return x > 0;
+    }
 
     public Client getClientById(int id){
         Optional<Client> client = clientRepository.findById(id);
         if (client.isEmpty()) {
-            System.out.println("вот ты и попался");
             throw new UserNotFoundException("Не удалось найти пользователя");
         }
         return clientRepository.getReferenceById(id);

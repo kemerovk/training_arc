@@ -6,5 +6,5 @@ create table if not exists client(
     age int check (age > 0),
     email text unique not null,
     minio_path text default null,
-    created_at timestamp default now()
+    created_at date default current_date
 );

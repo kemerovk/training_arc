@@ -29,8 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (request.getRequestURI().equals("credentials/register") ||
             request.getRequestURI().equals("credentials/logout") ||
             request.getRequestURI().equals("credentials/login") ||
-            request.getRequestURI().equals("credentials/login-jwt") ||
-            request.getRequestURI().equals("/minio/upload")) {
+            request.getRequestURI().equals("credentials/login-jwt")) {
                 filterChain.doFilter(request, response);
                 return;
         }
