@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -37,7 +38,8 @@ public class Client {
     @Column(name = "created_at")
     private Date creationTime;
 
-
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts;
 
     public Client(SignUpRequest request) {
         this.login = request.login();

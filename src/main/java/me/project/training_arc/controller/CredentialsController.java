@@ -26,10 +26,6 @@ public class CredentialsController {
 
     @Autowired
     private RegistrationService service;
-
-    @Autowired
-    private ClientService client;
-
     @Autowired
     private MyUserDetailsService userDetailsService;
     @Autowired
