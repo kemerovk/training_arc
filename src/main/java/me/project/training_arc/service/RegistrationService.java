@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
@@ -33,7 +34,7 @@ public class RegistrationService {
     private PasswordEncoder passwordEncoder;
 
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public SignUpResponse register(SignUpRequest signUpRequest){
         if (clientRepository.findByLogin(signUpRequest.login()).isPresent()){
             throw new RuntimeException("Пользователь с таким логином уже зарегистрирован");

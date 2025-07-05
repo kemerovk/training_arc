@@ -1,9 +1,21 @@
 package me.project.training_arc.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import me.project.training_arc.dto.PostDto;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "post")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +30,17 @@ public class Post {
     @Column(name = "path_to_pic")
     private String pathToPic;
 
-    @Column(name = "author")
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "author")
     private Client author;
 
+    @Column(name = "date")
+    private LocalDateTime postDate;
 
+    public void setNewDetails(PostDto post) {
+        this.title = post.title();
+        this.content = post.content();
+        this.pathToPic = post.pathToPic();
+        this.postDate = LocalDateTime.now();
+    }
 }

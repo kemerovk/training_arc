@@ -21,10 +21,6 @@ public class ClientController {
     @Autowired
     private RegistrationService service;
 
-    @GetMapping("success")
-    public String successPage(){
-        return "success";
-    }
 
     @GetMapping("me")
     public ResponseEntity<Client> getCurrentClient() {

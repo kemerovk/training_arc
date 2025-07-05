@@ -20,10 +20,7 @@ public class ClientService {
 
     @Transactional
     public boolean updateMinioPath(String login, String minioPath){
-        int x = clientRepository.updateMinioPath(minioPath, login);
-        System.out.println(x + " rows was updated");
-        System.out.println("login: " + login + " minioPath: " + minioPath );
-        return x > 0;
+        return clientRepository.updateMinioPath(minioPath, login) > 0;
     }
 
     public Client getClientById(int id){
